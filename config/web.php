@@ -43,14 +43,20 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'book'],
+                'GET api/books' => 'book/index',
+                'GET api/books/<id:\d+>' => 'book/view',
+                'POST api/books' => 'book/create',
+                'PUT api/books/<id:\d+>' => 'book/update',
+                'DELETE api/books/<id:\d+>' => 'book/delete',
             ],
         ],
-        */
+
     ],
     'params' => $params,
 ];
