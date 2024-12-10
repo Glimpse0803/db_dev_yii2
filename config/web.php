@@ -48,6 +48,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'video'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'book'],
                 'GET api/books' => 'book/index',
                 'GET api/books/<id:\d+>' => 'book/view',
