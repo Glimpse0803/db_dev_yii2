@@ -4,9 +4,9 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
-use app\models\Book;
+use app\models\VideosComments;
 
-class BookController extends Controller
+class VideosCommentsController extends Controller
 {
     public function behaviors()
     {
@@ -28,73 +28,73 @@ class BookController extends Controller
         ];
     }
 
-    // 获取所有图书
+    // 获取所有文章
     public function actionIndex()
     {
-        $books = Book::find()->all();
+        $videos_commentss = VideosComments::find()->all();
         return [
             'code' => 200,
             'message' => 'success',
-            'data' => $books
+            'data' => $videos_commentss
         ];
     }
 
-    // 获取单本图书
+    // 获取单个文章
     public function actionView($id)
     {
-        $book = Book::findOne($id);
-        if ($book) {
+        $videos_comments = VideosComments::findOne($id);
+        if ($videos_comments) {
             return [
                 'code' => 200,
                 'message' => 'success',
-                'data' => $book
+                'data' => $videos_comments
             ];
         }
         return [
             'code' => 404,
-            'message' => '图书不存在',
+            'message' => '文章不存在',
             'data' => null
         ];
     }
 
-    // 创建图书
+    // 创建文章
     public function actionCreate()
     {
-        $book = new Book();
+        $videos_comments = new VideosComments();
         // 获取原始请求数据并解析 JSON
         $data = json_decode(Yii::$app->request->getRawBody(), true);
 
         // 将数据加载到模型
-        $book->load($data, '');
-        if ($book->save()) {
+        $videos_comments->load($data, '');
+        if ($videos_comments->save()) {
             return [
                 'code' => 200,
                 'message' => '创建成功',
-                'data' => $book
+                'data' => $videos_comments
             ];
         }
         return [
             'code' => 400,
             'message' => '创建失败',
-            'data' => $book->errors
+            'data' => $videos_comments->errors
         ];
     }
 
-    // 更新图书
+    // 更新文章
     public function actionUpdate($id)
     {
-        $book = Book::findOne($id);
-        if ($book) {
+        $videos_comments = VideosComments::findOne($id);
+        if ($videos_comments) {
             // 获取原始请求数据并解析 JSON
             $data = json_decode(Yii::$app->request->getRawBody(), true);
 
             // 将数据加载到模型
-            $book->load($data, '');
-            if ($book->save()) {
+            $videos_comments->load($data, '');
+            if ($videos_comments->save()) {
                 return [
                     'code' => 200,
                     'message' => '更新成功',
-                    'data' => $book
+                    'data' => $videos_comments
                 ];
             }
         }
@@ -105,11 +105,11 @@ class BookController extends Controller
         ];
     }
 
-    // 删除图书
+    // 删除文章
     public function actionDelete($id)
     {
-        $book = Book::findOne($id);
-        if ($book && $book->delete()) {
+        $videos_comments = VideosComments::findOne($id);
+        if ($videos_comments && $videos_comments->delete()) {
             return [
                 'code' => 200,
                 'message' => '删除成功',

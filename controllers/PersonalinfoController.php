@@ -4,9 +4,9 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
-use app\models\Book;
+use app\models\Personalinfo;
 
-class BookController extends Controller
+class PersonalinfoController extends Controller
 {
     public function behaviors()
     {
@@ -28,73 +28,73 @@ class BookController extends Controller
         ];
     }
 
-    // 获取所有图书
+    // 获取所有文章
     public function actionIndex()
     {
-        $books = Book::find()->all();
+        $personalinfos = Personalinfo::find()->all();
         return [
             'code' => 200,
             'message' => 'success',
-            'data' => $books
+            'data' => $personalinfos
         ];
     }
 
-    // 获取单本图书
+    // 获取单个文章
     public function actionView($id)
     {
-        $book = Book::findOne($id);
-        if ($book) {
+        $personalinfo = Personalinfo::findOne($id);
+        if ($personalinfo) {
             return [
                 'code' => 200,
                 'message' => 'success',
-                'data' => $book
+                'data' => $personalinfo
             ];
         }
         return [
             'code' => 404,
-            'message' => '图书不存在',
+            'message' => '文章不存在',
             'data' => null
         ];
     }
 
-    // 创建图书
+    // 创建文章
     public function actionCreate()
     {
-        $book = new Book();
+        $personalinfo = new Personalinfo();
         // 获取原始请求数据并解析 JSON
         $data = json_decode(Yii::$app->request->getRawBody(), true);
 
         // 将数据加载到模型
-        $book->load($data, '');
-        if ($book->save()) {
+        $personalinfo->load($data, '');
+        if ($personalinfo->save()) {
             return [
                 'code' => 200,
                 'message' => '创建成功',
-                'data' => $book
+                'data' => $personalinfo
             ];
         }
         return [
             'code' => 400,
             'message' => '创建失败',
-            'data' => $book->errors
+            'data' => $personalinfo->errors
         ];
     }
 
-    // 更新图书
+    // 更新文章
     public function actionUpdate($id)
     {
-        $book = Book::findOne($id);
-        if ($book) {
+        $personalinfo = Personalinfo::findOne($id);
+        if ($personalinfo) {
             // 获取原始请求数据并解析 JSON
             $data = json_decode(Yii::$app->request->getRawBody(), true);
 
             // 将数据加载到模型
-            $book->load($data, '');
-            if ($book->save()) {
+            $personalinfo->load($data, '');
+            if ($personalinfo->save()) {
                 return [
                     'code' => 200,
                     'message' => '更新成功',
-                    'data' => $book
+                    'data' => $personalinfo
                 ];
             }
         }
@@ -105,11 +105,11 @@ class BookController extends Controller
         ];
     }
 
-    // 删除图书
+    // 删除文章
     public function actionDelete($id)
     {
-        $book = Book::findOne($id);
-        if ($book && $book->delete()) {
+        $personalinfo = Personalinfo::findOne($id);
+        if ($personalinfo && $personalinfo->delete()) {
             return [
                 'code' => 200,
                 'message' => '删除成功',

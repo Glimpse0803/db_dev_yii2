@@ -15,6 +15,8 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'RWhvCWBVJXlrv6Nt2qnXNvLst32LzbVS',
+            'enableCsrfValidation' => ($_SERVER['SERVER_PORT'] != 80),  // 如果端口为8080，则启用 CSRF，否则禁用
+
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -47,15 +49,22 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => true,  // 添加这行
             'rules' => [
+                // 基础 CRUD 路由规则
+                'GET api/<model:.+>' => '<model>/index',
+                'GET api/<model:.+>/<id:.+>' => '<model>/view',
+                'POST api/<model:.+>' => '<model>/create',
+                'PUT api/<model:.+>/<id:.+>' => '<model>/update',
+                'DELETE api/<model:.+>/<id:.+>' => '<model>/delete',
+
+                // 具体控制器规则
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'video'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'book'],
-                'GET api/books' => 'book/index',
-                'GET api/books/<id:\d+>' => 'book/view',
-                'POST api/books' => 'book/create',
-                'PUT api/books/<id:\d+>' => 'book/update',
-                'DELETE api/books/<id:\d+>' => 'book/delete',
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
             ],
+
+
         ],
 
     ],

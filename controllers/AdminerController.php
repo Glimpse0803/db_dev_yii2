@@ -4,9 +4,9 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
-use app\models\Book;
+use app\models\Adminer;
 
-class BookController extends Controller
+class AdminerController extends Controller
 {
     public function behaviors()
     {
@@ -28,73 +28,73 @@ class BookController extends Controller
         ];
     }
 
-    // 获取所有图书
+    // 获取所有用户
     public function actionIndex()
     {
-        $books = Book::find()->all();
+        $adminers = Adminer::find()->all();
         return [
             'code' => 200,
             'message' => 'success',
-            'data' => $books
+            'data' => $adminers
         ];
     }
 
-    // 获取单本图书
+    // 获取单个用户
     public function actionView($id)
     {
-        $book = Book::findOne($id);
-        if ($book) {
+        $adminer = Adminer::findOne($id);
+        if ($adminer) {
             return [
                 'code' => 200,
                 'message' => 'success',
-                'data' => $book
+                'data' => $adminer
             ];
         }
         return [
             'code' => 404,
-            'message' => '图书不存在',
+            'message' => '用户不存在',
             'data' => null
         ];
     }
 
-    // 创建图书
+    // 创建用户
     public function actionCreate()
     {
-        $book = new Book();
+        $adminer = new Adminer();
         // 获取原始请求数据并解析 JSON
         $data = json_decode(Yii::$app->request->getRawBody(), true);
 
         // 将数据加载到模型
-        $book->load($data, '');
-        if ($book->save()) {
+        $adminer->load($data, '');
+        if ($adminer->save()) {
             return [
                 'code' => 200,
                 'message' => '创建成功',
-                'data' => $book
+                'data' => $adminer
             ];
         }
         return [
             'code' => 400,
             'message' => '创建失败',
-            'data' => $book->errors
+            'data' => $adminer->errors
         ];
     }
 
-    // 更新图书
+    // 更新用户
     public function actionUpdate($id)
     {
-        $book = Book::findOne($id);
-        if ($book) {
+        $adminer = Adminer::findOne($id);
+        if ($adminer) {
             // 获取原始请求数据并解析 JSON
             $data = json_decode(Yii::$app->request->getRawBody(), true);
 
             // 将数据加载到模型
-            $book->load($data, '');
-            if ($book->save()) {
+            $adminer->load($data, '');
+            if ($adminer->save()) {
                 return [
                     'code' => 200,
                     'message' => '更新成功',
-                    'data' => $book
+                    'data' => $adminer
                 ];
             }
         }
@@ -105,11 +105,11 @@ class BookController extends Controller
         ];
     }
 
-    // 删除图书
+    // 删除用户
     public function actionDelete($id)
     {
-        $book = Book::findOne($id);
-        if ($book && $book->delete()) {
+        $adminer = Adminer::findOne($id);
+        if ($adminer && $adminer->delete()) {
             return [
                 'code' => 200,
                 'message' => '删除成功',
